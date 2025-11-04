@@ -1,0 +1,16 @@
+query UserOngoingAnime($userName: String, $status: MediaListStatus) {
+MediaListCollection(userName: $userName, type: ANIME, status: $status) {
+    lists {
+      entries {
+        media {
+          title {
+            romaji
+            english
+          }
+          episodes
+          status
+        }
+      }
+    }
+  }
+}

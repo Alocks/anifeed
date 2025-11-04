@@ -1,0 +1,5 @@
+*.ipynb
+.flake8
+.venv
+.vscode
+*.pyc
