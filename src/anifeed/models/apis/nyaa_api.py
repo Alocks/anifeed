@@ -14,10 +14,10 @@ from anifeed.constants.nyaa_enum import (
 @dataclass
 class NyaaParameters:
     q: str
-    f: NyaaFilter = NyaaFilter.NO_FILTER
-    s: NyaaColumnToOrder = NyaaColumnToOrder.SEEDS
-    o: NyaaOrder = NyaaOrder.DESCENDING
-    c: NyaaCategory = NyaaCategory.DEFAULT
+    f: NyaaFilter = NyaaFilter.NO_FILTER.value
+    s: NyaaColumnToOrder = NyaaColumnToOrder.SEEDS.value
+    o: NyaaOrder = NyaaOrder.DESCENDING.value
+    c: NyaaCategory = NyaaCategory.DEFAULT.value
 
 
 class NyaaApi(BaseApi):
@@ -28,9 +28,8 @@ class NyaaApi(BaseApi):
             self,
             params: NyaaParameters,
             ) -> Dict:
-        params_dict = asdict(params)
         self.logger.debug(f"Fetching data from Nyaa using {params}")
-        r = self.get(params=params_dict)
+        r = self.get(params=asdict(params))
         r.raise_for_status()
         self.logger.debug("Fetched data successfuly")
         return r.text

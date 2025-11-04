@@ -3,10 +3,11 @@ import logging
 
 from anifeed.utils.log_utils import configure_root_logger, get_logger
 from anifeed.models.apis.anilist_api import AniListApi
-from anifeed.models.apis.nyaa_api import NyaaApi
+from anifeed.models.apis.nyaa_api import NyaaApi, NyaaParameters
 from anifeed.services.similarity_service import SimilarityService  # optional
 from anifeed.services.parser_service import ParserService  # optional
-
+from anifeed.config.app_config import ApplicationConfig
+from anifeed.constants.api_enum import AniListStatus
 
 @dataclass
 class Application:
@@ -35,6 +36,10 @@ def build_app():
 
 def main():
     app = build_app()
+    anilist_parsed = app.parser_service.parse_user_anime_list(username=ApplicationConfig.user, status=AniListStatus.WATCHING)
+    nyaa_parsed = app.parser_service.search_and_parse_nyaa(params=NyaaParameters(q="Yofukashi no Uta"))
+    app.logger.debug(anilist_parsed[0])
+    app.logger.debug(nyaa_parsed[0])
 
 
 if __name__ == "__main__":
