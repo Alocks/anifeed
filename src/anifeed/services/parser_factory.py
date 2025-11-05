@@ -2,10 +2,12 @@ from typing import Type, Dict
 from anifeed.models.parsers.base_parser import BaseParser
 from anifeed.models.parsers.anilist_parser import AniListParser
 from anifeed.models.parsers.nyaa_parser import NyaaParser
+from anifeed.models.parsers.mal_parser import MalParser
 
 _PARSER_REGISTRY: Dict[str, Type[BaseParser]] = {
     "anilist": AniListParser,
     "nyaa": NyaaParser,
+    "mal": MalParser
 }
 
 
