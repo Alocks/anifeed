@@ -17,9 +17,6 @@ class MalApi(BaseApi):
                  ):
         super().__init__(base_url="https://api.myanimelist.net/v2", session=session, logger=logger)
         self.session.headers = header
-#        qpath = query_path or UniversalPath("models/apis/anilist_queries/fetch_userlist.graphql")
-#        with open(qpath, mode="r", encoding="utf-8") as fh:
-#            self._query_fetch_userlist = fh.read()
 
     def get_user_ongoing_anime(
             self,

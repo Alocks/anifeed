@@ -40,13 +40,11 @@ def build_app():
 
 def main():
     app = build_app()
-#    anilist_parsed = app.parser_service.parse_user_anime_list(username=ApplicationConfig.user, status=AniListStatus.WATCHING)
-#    nyaa_parsed = app.parser_service.search_and_parse_nyaa(params=NyaaParameters(q="Yofukashi no Uta"))
-#    app.logger.debug(anilist_parsed[0])
-#    app.logger.debug(nyaa_parsed[0])
-    mal_parsed = app.parser_service.parse_user_anime_list(username="xopazaru0343", status=MalStatus.WATCHING)
+    anilist_parsed = app.parser_service.parse_user_anime_list(username=ApplicationConfig.user, status=AniListStatus.WATCHING)
+    nyaa_parsed = app.parser_service.search_and_parse_nyaa(params=NyaaParameters(q="Yofukashi no Uta"))
+    app.logger.debug(anilist_parsed[0])
+    app.logger.debug(nyaa_parsed[0])
+    mal_parsed = app.parser_service.parse_user_anime_list_mal(username="xopazaru0343", status=MalStatus.WATCHING)
     app.logger.debug(mal_parsed[1])
-#    print(app.mal_api.get_user_ongoing_anime(username="xopazaru0343", status=MalStatus.WATCHING))
-#    print(app.mal_api.get_anime_data("21"))
 if __name__ == "__main__":
     main()
