@@ -1,9 +1,10 @@
 __all__ = ["NyaaApi"]
-from typing import Dict, Optional
+from typing import Dict
 from dataclasses import dataclass, asdict
 
-from anifeed.models.apis.base_api import BaseApi
-from anifeed.constants.nyaa_enum import (
+from anifeed.adapters.base_api import BaseApi
+from anifeed.adapters.parsers.nyaa_parser import NyaaParser
+from anifeed.constants.nyaa_search_enum import (
     NyaaFilter,
     NyaaCategory,
     NyaaColumnToOrder,
@@ -21,8 +22,15 @@ class NyaaParameters:
 
 
 class NyaaApi(BaseApi):
-    def __init__(self, base_url: Optional[str] = "https://nyaa.si", session=None, logger=None):
-        super().__init__(base_url=base_url, session=session, logger=logger)
+    def __init__(
+                self,
+                session=None,
+                logger=None):
+        super().__init__(
+            base_url="https://nyaa.si",
+            session=session,
+            api_parser=NyaaParser,
+            logger=logger)
 
     def fetch_search_result(
             self,

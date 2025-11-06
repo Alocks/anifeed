@@ -6,8 +6,8 @@ from anifeed.models.apis.anilist_api import AniListApi
 from anifeed.models.apis.nyaa_api import NyaaApi, NyaaParameters
 from anifeed.services.similarity_service import SimilarityService  # optional
 from anifeed.services.parser_service import ParserService  # optional
-from anifeed.config.app_config import ApplicationConfig
-from anifeed.constants.api_enum import AniListStatus, MalStatus
+from anifeed.constants.app_config import ApplicationConfig
+from anifeed.constants.anime_status_enum import AniListStatus, MalStatus
 from anifeed.models.apis.mal_api import MalApi
 
 @dataclass

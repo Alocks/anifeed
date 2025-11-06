@@ -1,8 +1,9 @@
-# ...existing code...
 import requests
 from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
 from typing import Optional, Any
+
+from anifeed.adapters.parsers.base_parser import BaseParser
 from anifeed.utils import log_utils
 
 
@@ -10,11 +11,13 @@ class BaseApi:
     def __init__(self,
                  base_url: Optional[str] = None,
                  session: Optional[requests.Session] = None,
+                 api_parser: Optional[BaseParser] = None,
                  logger=None
                  ):
         self.base_url = base_url
         self.session = session or self._create_session()
         self.logger = logger or log_utils.get_logger(self.__class__.__name__)
+        self.parser = api_parser
 
     def _create_session(self) -> requests.Session:
         s = requests.Session()

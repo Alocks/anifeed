@@ -1,13 +1,5 @@
-__all__ = ["BaseParser"]
 from anifeed.utils import log_utils
-from dataclasses import dataclass
 
-@dataclass
-class AnimeMetadata:
-    title_romaji: str
-    title_english: str
-    episodes: int
-    status: str
 
 class BaseParser:
     def __init__(self, api_metadata, session=None, logger=None):

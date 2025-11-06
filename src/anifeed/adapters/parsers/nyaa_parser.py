@@ -1,36 +1,24 @@
-__all__ = ["NyaaParser"]
-
-
 from typing import List
-from dataclasses import dataclass
 
 from bs4 import BeautifulSoup
 
-from anifeed.models.parsers.base_parser import BaseParser
-
-
-@dataclass
-class NyaaMetadata:
-    name: str
-    torrent_file: str
-    size: int
-    seeders: int
-    leechers: int
+from anifeed.adapters.parsers.base_parser import BaseParser
+from anifeed.models.anime_model import Anime
 
 
 class NyaaParser(BaseParser):
-    def parse_api_metadata(self) -> List[NyaaMetadata]:
+    def parse_api_metadata(self) -> List[Anime]:
         soup = BeautifulSoup(self._api_metadata, 'html.parser')
         res = []
         for row in soup.find('tbody').find_all('tr'):
             content = row.find_all("td")
             links = [x["href"] for x in content[2].find_all("a")]
             res.append(
-                NyaaMetadata(
+                Anime(
                     name=content[1].text.replace("\n", ""),
                     torrent_file=links[0],
                     size=content[3].text,
-                    seeders=content[4].text,
-                    leechers=content[5].text,
+                    seeders=int(content[5].text),
+                    leechers=int(content[6].text),
                 ))
         return res

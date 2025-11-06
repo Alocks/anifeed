@@ -1,17 +1,16 @@
-__all__ = ["AniListParser"]
-
 from typing import List
-from dataclasses import dataclass
 
-from anifeed.models.parsers.base_parser import BaseParser, AnimeMetadata
+from anifeed.adapters.parsers.base_parser import BaseParser
+from anifeed.models.anime_model import Anime
 from anifeed.utils.commons import DictWrangler
 
+
 class AniListParser(BaseParser):
-    def parse_api_metadata(self) -> List[AnimeMetadata]:
+    def parse_api_metadata(self) -> List[Anime]:
         metadata = DictWrangler.find_value_recursively(
             data=self._api_metadata, target_key="entries")
         res = [
-            AnimeMetadata(
+            Anime(
                 title_romaji=DictWrangler.find_value_recursively(x, "romaji"),
                 title_english=DictWrangler.find_value_recursively(x, "english"),
                 episodes=DictWrangler.find_value_recursively(x, "episodes"),
