@@ -2,8 +2,7 @@ from anifeed.utils import log_utils
 
 
 class BaseParser:
-    def __init__(self, api_metadata, session=None, logger=None):
-        self._api_metadata = api_metadata
+    def __init__(self, session=None, logger=None):
         self.session = session
         self.logger = logger or log_utils.get_logger(__name__)
 

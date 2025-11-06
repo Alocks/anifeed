@@ -1,4 +1,4 @@
-__all__ = ["AniListApi"]
+__all__ = ["AniListAdapter"]
 from anifeed.constants.anime_status_enum import AnimeStatus
 from typing import Dict, Optional
 from enum import EnumType
@@ -17,7 +17,7 @@ ANILIST_STATUS_MAP = {
 }
 
 
-class AniListApi(BaseApi):
+class AniListAdapter(BaseApi):
     def __init__(self,
                  session=None,
                  query_path: Optional[str] = None,
@@ -29,7 +29,7 @@ class AniListApi(BaseApi):
             api_parser=AniListParser,
             logger=logger)
 
-        qpath = query_path or UniversalPath("models/apis/anilist_queries/fetch_userlist.graphql")
+        qpath = query_path or UniversalPath("adapters/anilist_adapter/fetch_userlist.graphql")
         with open(qpath, mode="r", encoding="utf-8") as fh:
             self._query_fetch_userlist = fh.read()
 
@@ -43,7 +43,7 @@ class AniListApi(BaseApi):
         payload_dict = {
             "query": self._query_fetch_userlist,
             "variables": {"userName": username,
-                          "status": status.value}
+                          "status": status}
             }
         r = self.post(json=payload_dict)
         r.raise_for_status()

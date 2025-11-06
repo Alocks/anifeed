@@ -1,4 +1,4 @@
-__all__ = ["NyaaApi"]
+__all__ = ["NyaaAdapter"]
 from typing import Dict
 from dataclasses import dataclass, asdict
 
@@ -21,7 +21,7 @@ class NyaaParameters:
     c: NyaaCategory = NyaaCategory.DEFAULT.value
 
 
-class NyaaApi(BaseApi):
+class NyaaAdapter(BaseApi):
     def __init__(
                 self,
                 session=None,

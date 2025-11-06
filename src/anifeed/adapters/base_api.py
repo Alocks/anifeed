@@ -17,7 +17,7 @@ class BaseApi:
         self.base_url = base_url
         self.session = session or self._create_session()
         self.logger = logger or log_utils.get_logger(self.__class__.__name__)
-        self.parser = api_parser
+        self.parser = api_parser()
 
     def _create_session(self) -> requests.Session:
         s = requests.Session()

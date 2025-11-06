@@ -1,4 +1,4 @@
-__all__ = ["MalApi"]
+__all__ = ["MalAdapter"]
 import os
 from typing import Dict, Optional
 from enum import EnumType
@@ -17,7 +17,7 @@ MAL_STATUS_MAP = {
 }
 
 
-class MalApi(BaseApi):
+class MalAdapter(BaseApi):
     def __init__(self,
                  session=None,
                  query_path: Optional[str] = None,
