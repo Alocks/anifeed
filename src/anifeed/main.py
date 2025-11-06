@@ -1,47 +1,57 @@
+"""Simplified main using services instead of adapters"""
 from dataclasses import dataclass
 import logging
 
-from anifeed.adapters.aniilist_adapter import AniListAdapter
-from anifeed.adapters.nyaa_adapter import NyaaAdapter
+from anifeed.models.config_model import ApplicationConfig
+from anifeed.services.anime_service import AnimeService
+from anifeed.services.torrent_service import TorrentService
+from anifeed.services.similarity_service import SimilarityService
 from anifeed.constants.anime_status_enum import AnimeStatus
-from anifeed.models.nyaa_search_model import NyaaParameters
-from anifeed.constants.app_config import ApplicationConfig
-from anifeed.services.similarity_service import SimilarityService  # optional
+from anifeed.constants.app_config import load_application_config
+
 from anifeed.utils.log_utils import configure_root_logger, get_logger
 
 
 @dataclass
 class Application:
     logger: logging.Logger
-    anilist: AniListAdapter
-    nyaa: NyaaAdapter
-    similarity_service: SimilarityService = None  # optional
+    anime_service: AnimeService
+    torrent_service: TorrentService
+    similarity_service: SimilarityService
+    config: ApplicationConfig
 
 
-def build_app():
-    configure_root_logger(level=logging.DEBUG)
+def build_app() -> Application:
+    configure_root_logger(level=logging.INFO)
     logger = get_logger(__name__)
-    anilist = AniListAdapter()
-    nyaa = NyaaAdapter()
-    similarity_service = SimilarityService()  # optional
+    config = load_application_config()
+
     return Application(
         logger=logger,
-        anilist=anilist,
-        nyaa=nyaa,
-        similarity_service=similarity_service,
+        anime_service=AnimeService(source=config.api, logger=logger),
+        torrent_service=TorrentService(logger=logger),
+        similarity_service=SimilarityService(logger=logger),
+        config=config,
     )
 
 
 def main():
     app = build_app()
-    anilist_retval = app.anilist.get_user_anime_list(username=ApplicationConfig.user, status=AnimeStatus.WATCHING)
-    nyaa_retval = app.nyaa.fetch_search_result(params=NyaaParameters(q="Yofukashi no Uta"))
 
-    anilist_res = app.anilist.parser.parse_api_metadata(metadata=anilist_retval)
-    nyaa_res = app.nyaa.parser.parse_api_metadata(metadata=nyaa_retval)
+    animes = app.anime_service.get_user_anime_list(
+        username=app.config.user,
+        status=AnimeStatus.WATCHING
+    )
 
-    app.logger.info(anilist_res[0])
-    app.logger.info(nyaa_res[0])
+    if animes:
+        app.logger.info("%s", animes[0])
+
+        torrents = app.torrent_service.search(
+            query=animes[0].title_english or animes[0].title_romaji
+        )
+
+        if torrents:
+            app.logger.info("%s", torrents[0])
 
 
 if __name__ == "__main__":

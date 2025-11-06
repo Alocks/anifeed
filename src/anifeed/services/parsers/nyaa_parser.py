@@ -2,7 +2,7 @@ from typing import List, Dict, Any
 
 from bs4 import BeautifulSoup
 
-from anifeed.adapters.parsers.base_parser import BaseParser
+from anifeed.services.parsers.base_parser import BaseParser
 from anifeed.models.torrent_model import Torrent
 
 

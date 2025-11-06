@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import List
 
 from sentence_transformers import SentenceTransformer
 from numpy import dot
@@ -8,8 +8,8 @@ from anifeed.utils.log_utils import get_logger
 
 
 class SimilarityService:
-    def __init__(self, model_name: Optional[str] = None, logger=None):
-        self._model_name = model_name or "all-MiniLM-L6-v2"
+    def __init__(self, logger=None):
+        self._model_name = "all-MiniLM-L6-v2"
         self._model = None
         self.logger = logger or get_logger(self.__class__.__name__)
 
@@ -18,7 +18,7 @@ class SimilarityService:
             self.logger.debug("Loading similarity model from %s", self._model_name)
             self._model = SentenceTransformer(self._model_name)
 
-    def compute(self, to_compare: str, candidates: List[str]) -> float:
+    def compute(self, to_compare: str, candidates: List[str]) -> List[tuple[str, float]]:
         self.load_model()
         all_strings = [to_compare] + candidates
         embeddings = self._model.encode(all_strings)

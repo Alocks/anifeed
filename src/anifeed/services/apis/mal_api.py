@@ -1,10 +1,8 @@
-__all__ = ["MalAdapter"]
 import os
 from typing import Dict, Optional
 from enum import EnumType
 
-from anifeed.adapters.base_api import BaseApi
-from anifeed.adapters.parsers.mal_parser import MalParser
+from anifeed.services.apis.base_api import BaseApi
 from anifeed.constants.anime_status_enum import AnimeStatus
 
 MAL_STATUS_MAP = {
@@ -17,15 +15,13 @@ MAL_STATUS_MAP = {
 }
 
 
-class MalAdapter(BaseApi):
+class MalApi(BaseApi):
     def __init__(self,
                  session=None,
-                 query_path: Optional[str] = None,
                  logger=None,
                  ):
         super().__init__(
             base_url="https://api.myanimelist.net/v2",
-            api_parser=MalParser,
             session=session, logger=logger
             )
         self.session.headers = {"X-MAL-CLIENT-ID": os.getenv("MAL_CLIENT_ID")}
@@ -35,7 +31,6 @@ class MalAdapter(BaseApi):
             username: str,
             status: EnumType,
             ) -> Dict:
-        self.logger.debug(f"Fetching data from {username} in {status}")
         status = self._translate_status(internal_status=status)
         payload_dict = {
             "status": status.value,
@@ -43,5 +38,8 @@ class MalAdapter(BaseApi):
             }
         r = self.get(f"/users/{username}/animelist", params=payload_dict)
         r.raise_for_status()
-        self.logger.debug("Fetched data successfuly")
         return r.json()
+
+    def _translate_status(self, internal_status: AnimeStatus) -> Optional[str]:
+        """Translates the internal MediaStatus to the MAL API string."""
+        return MAL_STATUS_MAP.get(internal_status)

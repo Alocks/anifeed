@@ -1,17 +1,24 @@
-from dataclasses import dataclass, field
-from typing import List
-
-from anifeed.utils.commons import TomlParser
 from types import MappingProxyType
 
-
-APPLICATION_CONFIG = MappingProxyType(TomlParser.get_config("application"))
-NYAA_CONFIG = MappingProxyType(TomlParser.get_config("nyaa"))
-RSS_CONFIG = MappingProxyType(TomlParser.get_config("rss"))
+from anifeed.models.config_model import ApplicationConfig, NyaaConfig
+from anifeed.utils.commons import TomlParser
 
 
-@dataclass
-class ApplicationConfig:
-    user: str = APPLICATION_CONFIG.get("user")
-    api: str = APPLICATION_CONFIG.get("api")
-    status: List[str] = field(default_factory=[k for k, v in APPLICATION_CONFIG.get("status").items() if v])
+def load_application_config() -> ApplicationConfig:
+    """Factory function to load config"""
+    app_config = MappingProxyType(TomlParser.get_config("application"))
+    nyaa_config = MappingProxyType(TomlParser.get_config("nyaa"))
+    status_dict = app_config.get("status", {})
+    enabled_statuses = [k for k, v in status_dict.items() if v]
+    nyaa_config = NyaaConfig(
+        batch=nyaa_config.get("batch"),
+        fansub=nyaa_config.get("fansub"),
+        resolution=nyaa_config.get("resolution")
+        )
+    return ApplicationConfig(
+        user=app_config.get("user"),
+        api=app_config.get("api"),
+        status=enabled_statuses,
+        nyaa_config=nyaa_config
+
+    )
