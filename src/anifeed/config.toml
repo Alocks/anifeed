@@ -12,8 +12,3 @@ PLANNING = false
 BATCH = ["[batch]","(batch)"] # The order of tags inside the list dictates the priority data being parsed
 FANSUB = ["[Erai-raws]", "[SubsPlease]"]  # The order of tags inside the list dictates the priority data being parsed
 RESOLUTION = ["1080p", "720p", "480p"]  # The order of tags inside the list dictates the priority data being parsed
-
-[rss]
-TITLE = "RSS Feed Data"
-LINK = "Nao sei"
-DESCRIPTION = "Sei la"

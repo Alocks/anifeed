@@ -1,12 +1,12 @@
-# ...existing code...
 import requests
 from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
 from typing import Optional, Any
+
 from anifeed.utils import log_utils
 
 
-class BaseApi:
+class HttpClient:
     def __init__(self,
                  base_url: Optional[str] = None,
                  session: Optional[requests.Session] = None,

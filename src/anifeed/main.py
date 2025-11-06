@@ -1,50 +1,58 @@
+"""Simplified main using services instead of adapters"""
 from dataclasses import dataclass
 import logging
 
+from anifeed.models.config_model import ApplicationConfig
+from anifeed.services.anime_service import AnimeService
+from anifeed.services.torrent_service import TorrentService
+from anifeed.services.similarity_service import SimilarityService
+from anifeed.constants.anime_status_enum import AnimeStatus
+from anifeed.constants.app_config import load_application_config
+
 from anifeed.utils.log_utils import configure_root_logger, get_logger
-from anifeed.models.apis.anilist_api import AniListApi
-from anifeed.models.apis.nyaa_api import NyaaApi, NyaaParameters
-from anifeed.services.similarity_service import SimilarityService  # optional
-from anifeed.services.parser_service import ParserService  # optional
-from anifeed.config.app_config import ApplicationConfig
-from anifeed.constants.api_enum import AniListStatus, MalStatus
-from anifeed.models.apis.mal_api import MalApi
+
 
 @dataclass
 class Application:
     logger: logging.Logger
-    ani_api: AniListApi
-    nyaa_api: NyaaApi
-    mal_api: MalApi
-    parser_service: ParserService = None  # optional
-    similarity_service: SimilarityService = None  # optional
+    anime_service: AnimeService
+    torrent_service: TorrentService
+    similarity_service: SimilarityService
+    config: ApplicationConfig
 
 
-def build_app():
-    configure_root_logger(level=logging.DEBUG)
+def build_app() -> Application:
+    configure_root_logger(level=logging.INFO)
     logger = get_logger(__name__)
-    ani_api = AniListApi(logger=logger)
-    nyaa_api = NyaaApi(logger=logger)
-    mal_api = MalApi(logger=logger)
-    parser_service = ParserService(ani_api=ani_api, nyaa_api=nyaa_api, mal_api=mal_api, logger=logger)  # optional
-    similarity_service = SimilarityService(logger=logger)  # optional
+    config = load_application_config()
+
     return Application(
         logger=logger,
-        ani_api=ani_api,
-        nyaa_api=nyaa_api,
-        mal_api=mal_api,
-        parser_service=parser_service,
-        similarity_service=similarity_service,
+        anime_service=AnimeService(source=config.api, logger=logger),
+        torrent_service=TorrentService(logger=logger),
+        similarity_service=SimilarityService(logger=logger),
+        config=config,
     )
 
 
 def main():
     app = build_app()
-    anilist_parsed = app.parser_service.parse_user_anime_list(username=ApplicationConfig.user, status=AniListStatus.WATCHING)
-    nyaa_parsed = app.parser_service.search_and_parse_nyaa(params=NyaaParameters(q="Yofukashi no Uta"))
-    app.logger.debug(anilist_parsed[0])
-    app.logger.debug(nyaa_parsed[0])
-    mal_parsed = app.parser_service.parse_user_anime_list_mal(username="xopazaru0343", status=MalStatus.WATCHING)
-    app.logger.debug(mal_parsed[1])
+
+    animes = app.anime_service.get_user_anime_list(
+        username=app.config.user,
+        status=AnimeStatus.WATCHING
+    )
+
+    if animes:
+        app.logger.info("%s", animes[0])
+
+        torrents = app.torrent_service.search(
+            query=animes[0].title_english or animes[0].title_romaji
+        )
+
+        if torrents:
+            app.logger.info("%s", torrents[0])
+
+
 if __name__ == "__main__":
     main()
