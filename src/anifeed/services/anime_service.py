@@ -1,7 +1,3 @@
-"""
-Unified anime service - simpler than separate adapters.
-Combines API + Parser into one convenient service.
-"""
 from typing import List, Literal
 
 from anifeed.models.anime_model import Anime
