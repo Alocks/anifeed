@@ -1,4 +1,3 @@
-"""Simplified main using services instead of adapters"""
 from dataclasses import dataclass
 import logging
 
