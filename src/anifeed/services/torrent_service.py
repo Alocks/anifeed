@@ -1,6 +1,3 @@
-"""
-Unified torrent service.
-"""
 from typing import List
 
 from anifeed.models.torrent_model import Torrent
