@@ -5,3 +5,6 @@
 *.pyc
 .env
 pindureta.txt
+.coverage
+htmlcov
+.pytest_cache
