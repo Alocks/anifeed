@@ -16,7 +16,7 @@ class TorrentService:
     def search(self, query: str, **kwargs) -> List[Torrent]:
         if not query or not query.strip():
             raise ValueError("Search query cannot be empty")
-        params = NyaaParameters(q=query, **kwargs)
+        params = NyaaParameters(q=query.strip(), **kwargs)
         self.logger.debug("Searching torrents: %s", query)
         raw_html = self._api.fetch_search_result(params=params)
         torrents = self._parser.parse_api_metadata(metadata=raw_html)

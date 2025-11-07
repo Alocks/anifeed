@@ -6,7 +6,7 @@ from anifeed.utils.log_utils import get_logger
 
 
 class EmbeddingModelProtocol(Protocol):
-    def encode(self, texts: List[str]):
+    def encode(self, texts: List[str], batch_size: int):
         ...
 
 
