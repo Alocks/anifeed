@@ -3,8 +3,6 @@ name: Unit and functional tests
 on:
   push:
     branches: [ "master" ]
-  pull_request:
-    branches: [ "master" ]
 
 permissions:
   contents: read
@@ -26,9 +24,9 @@ jobs:
         with:
           enable-cache: true
 
-      - name: Install dependencies
-        run: uv sync --extra dev
+      - name: Build Documentation
+        run: mkdocs build --clean
 
-      - name: Run tests
-        run: uv run pytest --cov=src/anifeed --cov-report=xml
+      - name: Deploy Documentation
+        run: mkdocs gh-deploy
 
