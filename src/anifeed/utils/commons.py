@@ -1,7 +1,7 @@
-__all__ = ["UniversalPath"]
+__all__ = ["UniversalPath", "DictWrangler", "TomlParser"]
 
 from pathlib import Path
-from typing import Union
+from typing import Union, Dict
 import tomllib
 import os
 

@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "anifeed"
-version = "1.0.0"
+version = "0.4.0"
 description = "Parses data from an AniList user, serializes to a generic format, and broadcasts torrent data from the animes to a microservice using NyaaTorrents."
 readme = "README.md"
 authors = [
