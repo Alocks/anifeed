@@ -9,7 +9,7 @@ from enum import EnumType
 
 from anifeed.constants import AnimeStatus
 from anifeed.services.apis.base_api import BaseApi
-from anifeed.utils import UniversalPath
+from anifeed.utils.commons import UniversalPath
 
 ANILIST_STATUS_MAP = {
     AnimeStatus.WATCHING: "CURRENT",

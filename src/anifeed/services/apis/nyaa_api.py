@@ -7,7 +7,7 @@ This module provides an interface for searching torrents on Nyaa.si.
 from dataclasses import asdict
 
 from anifeed.services.apis.base_api import BaseApi
-from anifeed.models import NyaaParameters
+from anifeed.models.nyaa_search_model import NyaaParameters
 
 
 class NyaaApi(BaseApi):

@@ -6,8 +6,8 @@ This module parses AniList GraphQL responses into Anime domain objects.
 from typing import List, Dict, Any
 
 from anifeed.services.parsers.base_parser import BaseParser
-from anifeed.models import Anime
-from anifeed.utils import DictWrangler
+from anifeed.models.anime_model import Anime
+from anifeed.utils.commons import DictWrangler
 
 
 class AniListParser(BaseParser):

@@ -8,7 +8,7 @@ from typing import List
 from bs4 import BeautifulSoup
 
 from anifeed.services.parsers.base_parser import BaseParser
-from anifeed.models import Torrent
+from anifeed.models.torrent_model import Torrent
 
 
 class NyaaParser(BaseParser):

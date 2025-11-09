@@ -1,12 +1,12 @@
 from dataclasses import dataclass
 import logging
 
-from anifeed.models import ApplicationConfig
-from anifeed.services import AnimeService
-from anifeed.services import TorrentService
-from anifeed.services import SimilarityService
-from anifeed.constants import AnimeStatus
-from anifeed.constants import load_application_config
+from anifeed.models.anime_model import ApplicationConfig
+from anifeed.services.anime_service import AnimeService
+from anifeed.services.torrent_service import TorrentService
+from anifeed.services.similarity_service import SimilarityService
+from anifeed.constants.anime_status_enum import AnimeStatus
+from anifeed.constants.app_config import load_application_config
 from anifeed.utils.log_utils import configure_root_logger, get_logger
 from anifeed.exceptions import AnifeedError
 

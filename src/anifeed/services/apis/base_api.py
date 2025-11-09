@@ -7,7 +7,7 @@ with API-specific logging.
 import requests
 from typing import Optional
 
-from anifeed.utils import HttpClient
+from anifeed.utils.http_client import HttpClient
 from anifeed.utils.log_utils import get_logger
 
 
