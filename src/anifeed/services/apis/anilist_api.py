@@ -7,9 +7,9 @@ user anime lists.
 from typing import Dict, Optional
 from enum import EnumType
 
-from anifeed.constants.anime_status_enum import AnimeStatus
+from anifeed.constants import AnimeStatus
 from anifeed.services.apis.base_api import BaseApi
-from anifeed.utils.commons import UniversalPath
+from anifeed.utils import UniversalPath
 
 ANILIST_STATUS_MAP = {
     AnimeStatus.WATCHING: "CURRENT",

@@ -3,12 +3,12 @@ Nyaa.si HTML response parser.
 
 This module parses Nyaa.si search result HTML into Torrent domain objects.
 """
-from typing import List, Dict, Any
+from typing import List
 
 from bs4 import BeautifulSoup
 
 from anifeed.services.parsers.base_parser import BaseParser
-from anifeed.models.torrent_model import Torrent
+from anifeed.models import Torrent
 
 
 class NyaaParser(BaseParser):

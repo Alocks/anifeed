@@ -5,10 +5,10 @@ This module provides anime torrent search functionality using Nyaa.si.
 """
 from typing import List
 
-from anifeed.models.torrent_model import Torrent
-from anifeed.models.nyaa_search_model import NyaaParameters
-from anifeed.services.apis.nyaa_api import NyaaApi
-from anifeed.services.parsers.nyaa_parser import NyaaParser
+from anifeed.models import Torrent
+from anifeed.models import NyaaParameters
+from anifeed.services.apis import NyaaApi
+from anifeed.services.parsers import NyaaParser
 from anifeed.utils.log_utils import get_logger
 
 
@@ -68,7 +68,7 @@ class TorrentService:
             >>> torrents = service.search("Demon Slayer")
 
             >>> # With filters
-            >>> from anifeed.constants.nyaa_search_enum import NyaaFilter
+            >>> from anifeed.constants import NyaaFilter
             >>> torrents = service.search(
             ...     "Demon Slayer",
             ...     f=NyaaFilter.TRUSTED_ONLY.value

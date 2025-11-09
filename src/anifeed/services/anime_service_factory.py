@@ -5,12 +5,12 @@ This module implements the Factory pattern with a registry for extensibility,
 allowing registration of new anime sources at runtime.
 """
 from typing import Dict, Callable, Tuple
-from anifeed.services.apis.base_api import BaseApi
-from anifeed.services.parsers.base_parser import BaseParser
-from anifeed.services.apis.anilist_api import AniListApi
-from anifeed.services.apis.mal_api import MalApi
-from anifeed.services.parsers.anilist_parser import AniListParser
-from anifeed.services.parsers.mal_parser import MalParser
+from anifeed.services.apis import BaseApi
+from anifeed.services.parsers import BaseParser
+from anifeed.services.apis import AniListApi
+from anifeed.services.apis import MalApi
+from anifeed.services.parsers import AniListParser
+from anifeed.services.parsers import MalParser
 from anifeed.exceptions import AnimeSourceError
 
 

@@ -10,3 +10,4 @@ htmlcov
 .pytest_cache
 site
 *.egg-info
+anilist_subsplease.json

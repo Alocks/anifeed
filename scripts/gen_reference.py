@@ -44,16 +44,13 @@ def generate_module_docs():
 
 def generate_navigation():
     """Generate index.md and navigation for reference section."""
-    
     # Create reference/index.md as landing page
     with mkdocs_gen_files.open(DOCS_DIR / "index.md", "w") as index_file:
         index_file.write("# API Reference\n\n")
         index_file.write("Complete API documentation for the AniFeed package.\n\n")
-    
     # Organize modules by category
     categories = {}
     core_modules = []
-    
     for parts, doc_path in nav_items:
         if len(parts) > 1:
             # Module in a subdirectory (e.g., services/anime_service.py)
@@ -66,7 +63,6 @@ def generate_navigation():
             # Top-level module (e.g., exceptions.py, main.py)
             module_name = parts[0].replace("_", " ").title()
             core_modules.append((module_name, doc_path))
-    
     # Generate SUMMARY.md for literate-nav
     with mkdocs_gen_files.open(DOCS_DIR / "SUMMARY.md", "w") as nav_file:
         # Write Core section first if there are core modules
@@ -74,7 +70,6 @@ def generate_navigation():
             nav_file.write("* Core\n")
             for module_name, doc_path in sorted(core_modules):
                 nav_file.write(f"    * [{module_name}]({doc_path.name})\n")
-        
         # Write categorized modules
         for category in sorted(categories.keys()):
             nav_file.write(f"* {category.replace('_', ' ').title()}\n")

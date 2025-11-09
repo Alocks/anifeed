@@ -6,8 +6,8 @@ configuration from config.toml.
 """
 from types import MappingProxyType
 
-from anifeed.models.config_model import ApplicationConfig, NyaaConfig
-from anifeed.utils.commons import TomlParser
+from anifeed.models import ApplicationConfig, NyaaConfig
+from anifeed.utils import TomlParser
 
 
 def load_application_config() -> ApplicationConfig:

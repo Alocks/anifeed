@@ -17,7 +17,7 @@ AniFeed is a Python application for tracking anime and searching for torrents fr
 
 ```python
 from anifeed.main import build_app
-from anifeed.constants.anime_status_enum import AnimeStatus
+from anifeed.constants import AnimeStatus
 
 # Initialize application
 app = build_app()

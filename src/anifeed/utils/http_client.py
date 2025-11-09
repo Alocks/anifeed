@@ -10,7 +10,7 @@ from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
 from typing import Optional, Any
 
-from anifeed.utils import log_utils
+from anifeed.utils.log_utils import get_logger
 
 
 class HttpClient:
@@ -44,7 +44,7 @@ class HttpClient:
         """
         self.base_url = base_url
         self.session = session or self._create_session()
-        self.logger = logger or log_utils.get_logger(f"anifeed.utils.{self.__class__.__name__}")
+        self.logger = logger or get_logger(f"anifeed.utils.{self.__class__.__name__}")
 
     def _create_session(self) -> requests.Session:
         """

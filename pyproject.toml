@@ -42,6 +42,7 @@ mkdocs = [
 
 [project.scripts]
 anifeed = "anifeed.main:main"
+anifeed-api = "anifeed.api.main:run"
 
 [tool.setuptools.packages.find]
 where = ["src"]

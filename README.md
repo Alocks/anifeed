@@ -19,7 +19,7 @@ https://alocks.github.io/anifeed/
         - [ ] DTO for the response shape in all serializer
     - [ ] Controllers
         - [ ] Feedcontroller for the views
-        - [ ] HealthController for uptime checks
+        - [x] HealthController for uptime checks
         - [ ] AnimeController to cache requests
 - [ ] Services
     - [ ] Workflows for the controller using existing services
