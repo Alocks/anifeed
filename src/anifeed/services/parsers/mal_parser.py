@@ -54,6 +54,8 @@ class MalParser(BaseParser):
             data=metadata, target_key="data")
         res = [
             Anime(
+                anime_id=DictWrangler.find_value_recursively(x, "id"),
+                source= self.__class__.__name__,
                 title_romaji=DictWrangler.find_value_recursively(x, "title"),
                 title_english=DictWrangler.find_value_recursively(x, "en"),
                 episodes=DictWrangler.find_value_recursively(x, "num_episodes"),

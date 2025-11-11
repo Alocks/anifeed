@@ -1,7 +1,9 @@
 from dataclasses import dataclass
 import logging
 
-from anifeed.models.anime_model import ApplicationConfig
+from anifeed.db.repositories.torrent_repository import TorrentRepository
+from anifeed.db.repositories.anime_repository import AnimeRepository
+from anifeed.models.config_model import ApplicationConfig
 from anifeed.services.anime_service import AnimeService
 from anifeed.services.torrent_service import TorrentService
 from anifeed.services.similarity_service import SimilarityService
@@ -17,8 +19,9 @@ class Application:
     anime_service: AnimeService
     torrent_service: TorrentService
     similarity_service: SimilarityService
-    config: ApplicationConfig
-
+    config: ApplicationConfig 
+    animerec: AnimeRepository
+    torrentrec: TorrentRepository
 
 def build_app() -> Application:
     configure_root_logger(level=logging.INFO)
@@ -31,6 +34,8 @@ def build_app() -> Application:
         torrent_service=TorrentService(),
         similarity_service=SimilarityService(),
         config=config,
+        animerec=AnimeRepository(),
+        torrentrec=TorrentRepository()
     )
 
 
@@ -39,18 +44,27 @@ def main():
         app = build_app()
         animes = app.anime_service.get_user_anime_list(
             username=app.config.user,
-            status=AnimeStatus.WATCHING
+            status=AnimeStatus.COMPLETED
         )
-
+        
         if animes:
             app.logger.info("%s", animes[0])
-
-            torrents = app.torrent_service.search(
-                query=animes[0].title_english or animes[0].title_romaji
-            )
+            
+            app.animerec.save_batch(animes)
+            animelisttest = app.animerec.load()
+            torrents = list()
+            for anime in range(4):
+                torrents.append(app.torrent_service.search(
+                query=animes[anime].title_english or animes[anime].title_romaji
+            ))
 
             if torrents:
-                app.logger.info("%s", torrents[0])
+                app.logger.info("%s", torrents[0][0])
+                for i in range(4):
+                    app.torrentrec.save_batch(torrents[i], animes[i].anime_id, animes[i].source)
+                torrentlisttest = app.torrentrec.load()
+                for _ in range(5):
+                    print("debug")
 
     except AnifeedError as e:
         app.logger.error("Application error: %s", e)

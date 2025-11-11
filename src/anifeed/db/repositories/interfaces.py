@@ -13,6 +13,8 @@ class AnimeRepository(Protocol):
         ...
 
 
+
+
 class TorrentRepository(Protocol):
     """Optional cache/history port for torrents."""
     def save_batch(self, torrents: Sequence[Torrent]) -> None:

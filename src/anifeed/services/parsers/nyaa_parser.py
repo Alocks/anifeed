@@ -3,6 +3,7 @@ Nyaa.si HTML response parser.
 
 This module parses Nyaa.si search result HTML into Torrent domain objects.
 """
+import re
 from typing import List
 
 from bs4 import BeautifulSoup
@@ -68,6 +69,7 @@ class NyaaParser(BaseParser):
             links = [x["href"] for x in content[2].find_all("a")]
             res.append(
                 Torrent(
+                    torrent_id=re.search("([0-9]+).torrent", links[0]).group(1),
                     title=content[1].text.replace("\n", ""),
                     download_url=links[0],
                     size=content[3].text,

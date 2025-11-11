@@ -29,6 +29,8 @@ class Anime:
         ...     episodes=26
         ... )
     """
+    anime_id: int
+    source: str
     title_romaji: str
     title_english: str
     status: str
