@@ -68,7 +68,7 @@ class TorrentService:
             >>> torrents = service.search("Demon Slayer")
 
             >>> # With filters
-            >>> from anifeed.constants.nyaa_search_enum import NyaaFilter
+            >>> from anifeed.constants import NyaaFilter
             >>> torrents = service.search(
             ...     "Demon Slayer",
             ...     f=NyaaFilter.TRUSTED_ONLY.value

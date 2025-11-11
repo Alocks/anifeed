@@ -7,7 +7,7 @@ different anime tracking services (AniList, MyAnimeList).
 from typing import List, Literal
 
 from anifeed.models.anime_model import Anime
-from anifeed.constants.anime_status_enum import AnimeStatus
+from anifeed.constants import AnimeStatus
 from anifeed.services.anime_service_factory import create_anime_api_service
 from anifeed.utils.log_utils import get_logger
 

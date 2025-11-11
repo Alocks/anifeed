@@ -1,6 +1,6 @@
 [application]
-user="SakuraFreak"
-api="anilist" # Options[anilist, mal]
+user="xopazaru0343"
+api="mal" # Options[anilist, mal]
 [application.status]
 WATCHING = true
 COMPLETED = false

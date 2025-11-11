@@ -6,7 +6,7 @@ This module defines the data structure for Nyaa.si search query parameters.
 
 from dataclasses import dataclass
 
-from anifeed.constants.nyaa_search_enum import (
+from anifeed.constants import (
     NyaaCategory,
     NyaaColumnToOrder,
     NyaaFilter,

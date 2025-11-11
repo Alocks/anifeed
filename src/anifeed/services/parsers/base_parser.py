@@ -5,7 +5,7 @@ This module provides the abstract base class for all API response parsers.
 """
 from typing import Any
 
-from anifeed.utils import log_utils
+from anifeed.utils.log_utils import get_logger
 
 
 class BaseParser:
@@ -32,7 +32,7 @@ class BaseParser:
         Args:
             logger: Optional logger (defaults to namespaced logger)
         """
-        self.logger = logger or log_utils.get_logger(f"anifeed.services.{self.__class__.__name__}")
+        self.logger = logger or get_logger(f"anifeed.services.{self.__class__.__name__}")
 
     def parse_api_metadata(self, metadata: Any):
         """

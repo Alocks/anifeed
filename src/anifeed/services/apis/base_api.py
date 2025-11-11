@@ -4,9 +4,6 @@ Base API client with HTTP functionality.
 This module provides the base class for all API clients, extending HttpClient
 with API-specific logging.
 """
-
-from __future__ import annotations
-
 import requests
 from typing import Optional
 
